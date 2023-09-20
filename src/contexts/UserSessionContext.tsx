@@ -21,7 +21,10 @@ const reducer = (state, action) => {
 };
 
 // Context
-const UserSessionContext = createContext();
+const UserSessionContext = createContext<{
+  state: typeof initialState;
+  dispatch: React.Dispatch<any>;
+} | null>(null);
 
 // Provider
 export const UserSessionProvider = ({ children }) => {
