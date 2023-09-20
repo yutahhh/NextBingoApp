@@ -11,6 +11,10 @@
     ],
     "rewrites": [
       {
+        "source": "/games/*",
+        "destination": "/games/[id].html"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }

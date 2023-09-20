@@ -20,7 +20,10 @@ const reducer = (state, action) => {
 };
 
 // Context
-const BingoContext = createContext();
+const BingoContext = createContext<{
+  state: typeof initialState;
+  dispatch: React.Dispatch<any>;
+} | null>(null);
 
 // Provider
 export const BingoProvider = ({ children }) => {
