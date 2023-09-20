@@ -1,5 +1,6 @@
-import { getApps, initializeApp } from 'firebase/app';
-import "firebase/database";
+import { getApps, initializeApp, FirebaseApp, getApp } from 'firebase/app';
+import { getDatabase, Database } from "firebase/database";
+import "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -11,8 +12,15 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
+let firebaseApp: FirebaseApp
+let db: Database
+
 export const initFirebase = () => {
-  if (!getApps().length) {
-    initializeApp(firebaseConfig);
-  }
+  firebaseApp = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+  db = getDatabase(firebaseApp);
 };
+
+export {
+  firebaseApp,
+  db
+}
