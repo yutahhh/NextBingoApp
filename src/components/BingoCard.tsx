@@ -1,5 +1,6 @@
 import React from 'react';
-import { XIcon, CheckCircleIcon, BellIcon } from '@heroicons/react/solid';
+import { CheckCircle, Notifications } from '@mui/icons-material';
+import { Paper, Grid, Typography, Box } from '@mui/material';
 import { Player } from '@/models/player';
 import { ColType } from '@/types/BingoCardType';
 
@@ -12,43 +13,54 @@ interface BingoCardProps {
 
 const BingoCard: React.FC<BingoCardProps> = ({ title, cols, bingoPlayers, reachPlayers }) => {
   return (
-    <div className="max-w-sm m-auto p-4">
+    <Box>
       {/* ビンゴの人 */}
       {bingoPlayers?.length > 0 && (
-        <div id="toast-bingo" className="flex items-center w-full max-w-xs p-4 my-2 space-x-4 text-gray-500 bg-white divide-x divide-gray-200 rounded-lg shadow dark:text-gray-400 dark:divide-gray-700 space-x dark:bg-gray-800" role="alert">
-          <CheckCircleIcon className="w-5 h-5 text-green-400" aria-hidden="true" />
-          <span>{bingoPlayers.map(player => player.name || '無名').join(', ')}</span>
-        </div>
+        <Paper elevation={3} style={{ padding: '16px', marginBottom: '16px' }}>
+          <CheckCircle style={{ color: '#C8E6C9' }}  />
+          <Typography variant="body1">
+            {bingoPlayers.map(player => player.name || '無名').join(', ')}
+          </Typography>
+        </Paper>
       )}
       {/* リーチの人 */}
       {reachPlayers?.length > 0 && (
-        <div id="toast-reach" className="flex items-center w-full max-w-xs p-4 my-2 space-x-4 text-gray-500 bg-white divide-x divide-gray-200 rounded-lg shadow dark:text-gray-400 dark:divide-gray-700 space-x dark:bg-gray-800" role="alert">
-          <BellIcon className="w-5 h-5 text-yellow-400" aria-hidden="true" />
-          <span>{reachPlayers.map(player => player.name || '無名').join(', ')}</span>
-        </div>
+        <Paper elevation={3} style={{ padding: '16px', marginBottom: '16px' }}>
+          <Notifications style={{ color: '#FFF176' }} />
+          <Typography variant="body1">
+            {reachPlayers.map(player => player.name || '無名').join(', ')}
+          </Typography>
+        </Paper>
       )}
       {/* ビンゴカード */}
-      <div className="border border-purple-200 p-4 rounded-lg">
-        <h1 className="text-2xl font-bold mb-4 text-center">{ title }</h1>
-        <div className="grid grid-cols-5 gap-4">
+      <Paper elevation={3} style={{ padding: '16px' }}>
+        <Typography variant="h4" align="center" gutterBottom>
+          {title}
+        </Typography>
+        <Grid container spacing={2}>
           {cols.map((col, index) => (
-            <div 
-              key={index} 
-              className={`
-                w-12 h-12 flex justify-center items-center border border-gray-300 rounded-lg 
-                ${col.isBingoCol ? 'bg-green-200' : col.isReachCol ? 'bg-yellow-200' : ''}
-              `}
-            >
-              {col.isDone ? (
-                <XIcon className="h-6 w-6 text-gray-400" />
-              ) : (
-                <span className="text-xl">{col.num}</span>
-              )}
-            </div>
+            <Grid item xs={2.4} key={index}>
+              <Paper 
+                elevation={col.isBingoCol ? 6 : col.isReachCol ? 4 : 1} 
+                style={{
+                  height: '48px', 
+                  display: 'flex', 
+                  justifyContent: 'center', 
+                  alignItems: 'center',
+                  backgroundColor: col.isBingoCol ? '#C8E6C9' : col.isReachCol ? '#FFF176' : '#FFFFFF'
+                }}
+              >
+                {col.isDone ? (
+                  <CheckCircle color="disabled" />
+                ) : (
+                  <Typography variant="h6">{col.num}</Typography>
+                )}
+              </Paper>
+            </Grid>
           ))}
-        </div>
-      </div>
-    </div>
+        </Grid>
+      </Paper>
+    </Box>
   );
 };
 

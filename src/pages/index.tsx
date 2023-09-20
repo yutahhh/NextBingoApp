@@ -4,6 +4,12 @@ import { Game } from '@/models/game'
 import { createGame } from '@/utils/DatabaseUtil';
 import { useUserSession } from '@/contexts/UserSessionContext';
 
+// MUI
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+
 const IndexPage: React.FC = () => {
   const router = useRouter();
   const { state } = useUserSession()
@@ -45,38 +51,38 @@ const IndexPage: React.FC = () => {
   }, [state.userId]);
 
   return (
-    <div className="m-auto p-4 max-w-sm">
+     <Box className="m-auto p-4 max-w-sm">
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+        <Box mb={2}>
+          <Typography variant="h6" gutterBottom>
             ゲーム名
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          </Typography>
+          <TextField
+            fullWidth
             id="name"
             type="text"
             value={game.name}
-            onChange={handleNameChange} 
+            onChange={handleNameChange}
           />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="horizontal">
+        </Box>
+        <Box mb={2}>
+          <Typography variant="h6" gutterBottom>
             サイズ{game.size}×{game.size}（奇数）
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          </Typography>
+          <TextField
+            fullWidth
             id="size"
             type="number"
             value={game.size}
             onChange={handleSizeChange}
           />
-          {error && <p className="text-red-500 text-xs italic">{error}</p>}
-        </div>
-        <button type="submit" className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 my-2 rounded">
+          {error && <Typography variant="body2" color="error">{error}</Typography>}
+        </Box>
+        <Button type="submit" variant="contained" color="primary" fullWidth>
           ホストで開始
-        </button>
+        </Button>
       </form>
-    </div>
+    </Box>
   );
 };
 
